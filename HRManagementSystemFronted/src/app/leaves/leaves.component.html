@@ -1,1 +1,25 @@
-<p>leaves works!</p>
+<div class="p-6">
+  <h2 class="text-2xl font-semibold mb-4">Leave List</h2>
+  <div *ngIf="isLoading">Loading...</div>
+  <table class="min-w-full border border-gray-300" *ngIf="!isLoading && leavesInfos.length">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="border p-2">ID</th>
+        <th class="border p-2">Leave Name</th>
+        <th class="border p-2">Description</th>
+        <th class="border p-2">Hours</th>
+        <th class="border p-2">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let leave of leavesInfos">
+        <td class="border p-2">{{ leave.Id }}</td>
+        <td class="border p-2">{{ leave.LeaveName }}</td>
+        <td class="border p-2">{{ leave.Description }}</td>
+        <td class="border p-2">{{ leave.LeaveLimitHours }}</td>
+        <td class="border p-2">{{ leave.CreateDate | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!isLoading && !leavesInfos.length">No data found.</div>
+</div>
