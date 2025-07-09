@@ -1,0 +1,9 @@
+.dropdown-container {
+  position: relative;
+}
+.dropdown-list {
+  position: absolute;
+  background: white;
+  z-index: 10;
+  width: 100%;
+}

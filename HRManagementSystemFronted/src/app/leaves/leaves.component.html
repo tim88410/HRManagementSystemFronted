@@ -10,6 +10,7 @@
           <th class="border p-2">Description</th>
           <th class="border p-2">Hours</th>
           <th class="border p-2">Date</th>
+          <th class="border p-2"></th>
         </tr>
       </thead>
       <tbody>
@@ -19,6 +20,14 @@
           <td class="border p-2">{{ leave.Description }}</td>
           <td class="border p-2">{{ leave.LeaveLimitHours }}</td>
           <td class="border p-2">{{ leave.CreateDate | date:'short' }}</td>
+          <td class="border p-2">
+            <button
+              (click)="onEdit(leave)"
+              class="border border-blue-500 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition"
+            >
+              編輯
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -30,6 +39,7 @@
           <th class="border p-2">Leave Name</th>
           <th class="border p-2">Description</th>
           <th class="border p-2">Hours</th>
+          <th class="border p-2"></th>
           <!-- <th class="border p-2">Date</th> -->
         </tr>
       </thead>
@@ -40,6 +50,14 @@
           <td class="border p-2">{{ leave.Description }}</td>
           <td class="border p-2">{{ leave.LeaveLimitHours }}</td>
           <!-- <td class="border p-2">{{ leave.CreateDate | date:'short' }}</td> -->
+          <td class="border p-2">
+            <button
+              (click)="onEdit(leave)"
+              class="border border-blue-500 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition"
+            >
+              編輯
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

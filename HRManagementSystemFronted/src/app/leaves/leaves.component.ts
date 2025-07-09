@@ -2,6 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, switchMap, takeUntil, of } from 'rxjs';
 import { LeavesService } from './leaves.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-leaves',
@@ -14,7 +15,8 @@ export class LeavesComponent implements OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private leavesService: LeavesService
+    private leavesService: LeavesService,
+    private router: Router
   ) {
     this.route.paramMap
       .pipe(
@@ -40,6 +42,12 @@ export class LeavesComponent implements OnDestroy {
           this.isLoading = false;
         }
       });
+  }
+  
+  onEdit(leave: any) {
+    this.router.navigate(['/leaves/edit', leave.Id], {
+      state: { data: leave }
+    });
   }
 
   ngOnDestroy() {

@@ -16,4 +16,8 @@ export class LeavesService {
     const encoded = encodeURIComponent(name || '');
     return this.http.get(`${this.baseUrl}?Page=1&PageLimit=10&LeaveName=${encoded}`);
   }
+
+  updateLeave(body: any): Observable<any> {
+    return this.http.put(this.baseUrl, body);
+  }
 }
