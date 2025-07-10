@@ -4,7 +4,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 @Component({
   selector: 'app-leave-name-dropdown',
   templateUrl: './leave-name-dropdown.component.html',
-  styleUrls: ['./leave-name-dropdown.component.scss'],
+  styleUrls: ['./leave-name-dropdown.component.css'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

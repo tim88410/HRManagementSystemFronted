@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LeavesService } from '../leaves/leaves.service';
+import { FormValidators } from '../shared/validators/form-validators/form-validators.component';
 
 @Component({
   selector: 'app-edit',
@@ -39,7 +40,7 @@ export class EditComponent implements OnInit {
       Description: [data.Description],
       LeaveLimitHours: [
         data.LeaveLimitHours,
-        [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]
+        [Validators.required, FormValidators.decimalValidator]
       ],
       UserId: [data.OperateUserId || 1],
       CreateDate: [data.CreateDate]
