@@ -58,7 +58,12 @@ export class EditComponent implements OnInit {
 
     const payload = this.leavesArray.value[0];
     this.leavesService.updateLeave(payload).subscribe({
-      next: () => this.router.navigate(['/leaves']),
+      next: () => this.router.navigate(['/leaves'], {
+        queryParams: {
+          Page: 1,
+          PageLimit: 10
+        }
+      }),
       error: err => console.error(err)
     });
   }

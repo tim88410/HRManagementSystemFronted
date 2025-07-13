@@ -1,23 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root',
+})
 export class LeavesService {
-  private readonly baseUrl = 'https://localhost:44378/v1/Leaves';
+  private readonly baseUrl = 'https://localhost:44378';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute
+  ) {}
 
-  getLeaveById(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}`);
-  }
+  searchLeavesByName(): Observable<any> {
+    const page = this.route.snapshot.queryParamMap.get('Page') ?? '1';
+    const pageLimit = this.route.snapshot.queryParamMap.get('PageLimit') ?? '10';
 
-  searchLeavesByName(name: string): Observable<any> {
-    const encoded = encodeURIComponent(name || '');
-    return this.http.get(`${this.baseUrl}?Page=1&PageLimit=10&LeaveName=${encoded}`);
+    const url = `${this.baseUrl}/v1/Leaves?Page=${page}&PageLimit=${pageLimit}`;
+    return this.http.get<any>(url);
   }
 
   updateLeave(body: any): Observable<any> {
-    return this.http.put(this.baseUrl, body);
+    return this.http.put(`${this.baseUrl}/v1/Leaves`, body);
   }
 }
