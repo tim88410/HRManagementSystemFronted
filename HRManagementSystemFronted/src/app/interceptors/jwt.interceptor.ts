@@ -1,34 +1,35 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-} from '@angular/common/http';
-import { Observable, switchMap } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable()
-export class JwtInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+export class JwtAuthInterceptor implements HttpInterceptor {
 
-  intercept(
-    request: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    if (request.url.includes('/v1/Leaves')) {
-      return this.authService.login().pipe(
-        switchMap((token) => {
-          const cloned = request.clone({
-            setHeaders: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          return next.handle(cloned);
-        })
-      );
+  // 你在 AuthService 裡已簡化好的 Base64 字串，直接帶入
+  private basicAuthBase64 = '簡化後的Base64字串(例: dXNlcjpwYXNz)';
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // 從 localStorage 拿 JWT Token
+    const jwtToken = localStorage.getItem('jwtToken');
+
+    let authReq = req;
+
+    if (jwtToken) {
+      // 有 JWT Token，帶 Bearer Token
+      authReq = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${jwtToken}`
+        }
+      });
+    } else {
+      // 沒 JWT Token，帶 Basic 認證
+      authReq = req.clone({
+        setHeaders: {
+          Authorization: `Basic ${this.basicAuthBase64}`
+        }
+      });
     }
 
-    return next.handle(request);
+    return next.handle(authReq);
   }
 }
